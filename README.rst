@@ -13,13 +13,13 @@ Currently the following data is collected:
 Build
 -----
 
-	$ mkdir -p MetrilyxCacher/{src,bin,pkg}
+    $ mkdir -p MetrilyxCacher/{src,bin,pkg}
 
     $ cd MetrilyxCacher
 
     $ export GOPATH=$(pwd)
 
-	$ go get github.com/euforia/metrilyx-cacher
+    $ go get github.com/euforia/metrilyx-cacher
 
     $ go install github.com/euforia/metrilyx-cacher
 
