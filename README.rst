@@ -11,7 +11,7 @@ Currently the following data is collected:
 
 
 Build
------::
+-----
 
 	$ mkdir -p MetrilyxCacher/{src,bin,pkg}
 	$ cd MetrilyxCacher
