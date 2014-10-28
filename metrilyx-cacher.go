@@ -33,10 +33,10 @@ func getTsdbUrl(cfgfile string) string {
         }
         var dpconfig DataproviderConfig
         json.Unmarshal(file, &dpconfig)
-        
-        return fmt.Sprintf("%s:%d%s", 
-                        dpconfig.Dataprovider.URI, 
-                        dpconfig.Dataprovider.Port, 
+
+        return fmt.Sprintf("%s:%d%s",
+                        dpconfig.Dataprovider.URI,
+                        dpconfig.Dataprovider.Port,
                         dpconfig.Dataprovider.SearchEndpoint)
 }
 
@@ -57,9 +57,9 @@ func initFlags() (string, string, string, int) {
     flag.IntVar(&refreshInterval, "refresh-interval", 180, "Cache refresh in seconds")
     //flag.StringVar(&endpoint, "endpoint", "/", "Endpoint prefix to serve data")
     flag.StringVar(&tsdbUrl, "url", "", "Suggest URL endpoint to OpenTSDB (e.g. http://localhost:4242/api/suggest)")
-    flag.StringVar(&configFile, "config", "", "Configuration file")
+    flag.StringVar(&configFile, "config", "", "Configuration file instead of CLI options")
     flag.Parse()
-    
+
     if configFile != "" {
         tsdbUrl = getTsdbUrl(configFile)
     } else {
@@ -143,5 +143,5 @@ func main() {
     })
 
     log.Printf("Starting server %s%s", LISTEN_ADDR, SERVE_ENDPOINT)
-    log.Fatal(http.ListenAndServe(LISTEN_ADDR, nil)) 
+    log.Fatal(http.ListenAndServe(LISTEN_ADDR, nil))
 }
