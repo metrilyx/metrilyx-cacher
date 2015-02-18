@@ -1,4 +1,6 @@
 
+SHELL=/bin/bash
+
 clean:
 	rm -rvf ./bin
 	rm -rvf ./build
