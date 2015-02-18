@@ -6,7 +6,7 @@ clean:
 	rm -rvf ./build
 
 .build:
-	echo $GOPATH
+	echo $$GOPATH
 	go get -d -v ./...
 	go install -v ./...
 	mkdir -p ./build/metrilyx-cacher/opt/metrilyx/bin
