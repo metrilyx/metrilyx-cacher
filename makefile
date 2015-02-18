@@ -9,5 +9,5 @@ clean:
 	go get -d -v ./...
 	go install -v ./...
 	mkdir -p ./build/metrilyx-cacher/opt/metrilyx/bin
-	pwd
-	pwd && cp ./../../../../bin/metrilyx-cacher ./build/metrilyx-cacher/opt/metrilyx/bin/
+	ls -la ../../../../bin/
+	cp ../../../../bin/metrilyx-cacher ./build/metrilyx-cacher/opt/metrilyx/bin/
