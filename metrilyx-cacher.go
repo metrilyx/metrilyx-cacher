@@ -132,7 +132,7 @@ func main() {
 				params := r.URL.Query()
 				if val, ok := params["q"]; ok {
 
-					results, _ := mcache.SearchByType(MetaMap[metadataType], val[0])
+					results := mcache.SearchByType(MetaMap[metadataType], val[0])
 					bytes, err := json.Marshal(results)
 					if err != nil {
 						http.Error(w, err.Error(), http.StatusInternalServerError)
