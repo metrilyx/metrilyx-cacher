@@ -6,9 +6,7 @@ clean:
 	rm -rvf ./build
 
 .build:
-	go env
 	go get -d -v ./...
-	go install -v ./...
-	sudo find / -name '*metrilyx-cacher*'
+	go build -v metrilyx-cacher.go 
 	mkdir -p ./build/metrilyx-cacher/opt/metrilyx/bin
-	cp ../../../../bin/metrilyx-cacher ./build/metrilyx-cacher/opt/metrilyx/bin/
+	cp metrilyx-cacher ./build/metrilyx-cacher/opt/metrilyx/bin/
