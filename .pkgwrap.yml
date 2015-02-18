@@ -7,11 +7,13 @@ Distributions:
     - name: ubuntu
       release: 14.04
       build_cmd:
+      - pwd
       - make .build
 
     - name: ubuntu
       release: 12.04
       build_cmd:
+      - pwd
       - make .build
 
 Package:
