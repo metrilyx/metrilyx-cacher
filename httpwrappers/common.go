@@ -1,11 +1,11 @@
 package httpwrappers
 
-import(
-	"io"
-	"net/http"
-	"io/ioutil"
+import (
 	"crypto/tls"
 	"encoding/json"
+	"io"
+	"io/ioutil"
+	"net/http"
 )
 
 type HttpResponseData struct {
@@ -30,11 +30,10 @@ type HTTPCall struct {
 
 func NewHTTPCall(secure bool) *HTTPCall {
 	if secure {
-		httpTransport := &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true},}
-		return &HTTPCall{client: http.Client{Transport: httpTransport},}
-	} else {
-		return &HTTPCall{client: http.Client{}}
+		httpTransport := &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}}
+		return &HTTPCall{client: http.Client{Transport: httpTransport}}
 	}
+	return &HTTPCall{client: http.Client{}}
 }
 
 func (h *HTTPCall) getReponseBytes(r *http.Response, e error) ([]byte, error) {
