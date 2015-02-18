@@ -6,5 +6,5 @@ clean:
 .build:
 	go get -d -v ./...
 	go install -v ./...
-	[ -f ./build/opt/metrilyx/bin ] || mkdir -p ./build/opt/metrilyx/bin
-	cp ../../../../bin/metrilyx-cacher ./build/opt/metrilyx/bin/
+	mkdir -p ./build/metrilyx-cacher/opt/metrilyx/bin
+	cp ../../../../bin/metrilyx-cacher ./build/metrilyx-cacher/opt/metrilyx/bin/
