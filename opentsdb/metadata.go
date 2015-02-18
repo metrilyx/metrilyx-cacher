@@ -151,6 +151,8 @@ func (m *MetadataCache) SearchByType(mdType string, query string) []string {
 		return m.getMatches(m.TagValue, query)
 	default:
 		log.Println("ERROR: invalid metadata type:", mdType)
-		return make([]string, 0)
+		break
+
 	}
+	return make([]string, 0)
 }
