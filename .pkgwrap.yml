@@ -12,8 +12,12 @@ Distributions:
     - name: ubuntu
       release: 12.04
       build_cmd:
-      - printenv
-      - make .build
+      - go get -d -v ./...
+      - go install -v ./...
+      - ls -la ../../../../
+      - ls -la ../../../../bin
+      - mkdir -p ./build/metrilyx-cacher/opt/metrilyx/bin
+      - cp ../../../../bin/metrilyx-cacher ./build/metrilyx-cacher/opt/metrilyx/bin/
 
 Package:
     build_env: go
