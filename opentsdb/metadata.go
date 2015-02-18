@@ -2,7 +2,7 @@ package opentsdb
 
 import (
 	"fmt"
-	"github.com/euforia/metrilyx-cacher/httpwrappers"
+	"github.com/metrilyx/metrilyx-cacher/httpwrappers"
 	"log"
 	"regexp"
 	"sync"

@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"github.com/euforia/metrilyx-cacher/opentsdb"
+	"github.com/metrilyx/metrilyx-cacher/opentsdb"
 	"io/ioutil"
 	"log"
 	"net/http"
