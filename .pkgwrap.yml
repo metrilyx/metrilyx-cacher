@@ -1,18 +1,21 @@
 Distributions:
     - name: centos
       release: 6
+      
       build_cmd:
-      - make .build
+      - make all
 
     - name: ubuntu
       release: 14.04
+      
       build_cmd:
-      - make .build
+      - make all
 
     - name: ubuntu
       release: 12.04
+      
       build_cmd:
-      - make .build
+      - make all
 
 Package:
     build_env: go
