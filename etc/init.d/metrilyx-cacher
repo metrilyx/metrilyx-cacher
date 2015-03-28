@@ -26,10 +26,14 @@ NAME="metrilyx-cacher"
 BIN="${APP_HOME}/bin/${NAME}.${OS}.${ARCH}"
 LOGFILE="${APP_HOME}/log/${NAME}.log"
 
+# This is the metrilyx configuration.
 CACHER_CONFIG=${CACHER_CONFIG:-${APP_HOME}/etc/metrilyx/metrilyx.conf}
 DEFAULT_OPTS="-config $CACHER_CONFIG";
 
-[ -f "$CACHER_CONFIG" ] || { echo "Config not found: $CACHER_CONFIG!"; exit 3; }
+[ -f "$CACHER_CONFIG" ] || { 
+	echo "Configuration not found: $CACHER_CONFIG!"; 
+	exit 3; 
+}
 
 RETVAL=0;
 
@@ -88,4 +92,4 @@ case "$1" in
 		exit 1;
 		;;
 esac
-exit 0;
+exit $RETVAL;
