@@ -100,9 +100,11 @@ type MetadataCache struct {
 }
 
 func NewMetadataCache() *MetadataCache {
-	return &MetadataCache{make(map[string]interface{}),
-		map[string]interface{}{},
-		map[string]interface{}{}}
+	return &MetadataCache{
+		Metric:   make(map[string]interface{}),
+		TagKey:   make(map[string]interface{}),
+		TagValue: make(map[string]interface{}),
+	}
 }
 
 func (m *MetadataCache) AddByType(mdType string, data []string) {
@@ -128,6 +130,9 @@ func (m *MetadataCache) AddByType(mdType string, data []string) {
 	}
 }
 
+/*
+	Search a dataset given a regular expression.
+*/
 func (m *MetadataCache) getMatches(dataset map[string]interface{}, query string) []string {
 	re, _ := regexp.Compile(query)
 	out := make([]string, 0)
@@ -140,6 +145,13 @@ func (m *MetadataCache) getMatches(dataset map[string]interface{}, query string)
 	return out
 }
 
+/*
+	Search for metadata based on type and a query regular expression.
+
+	Params:
+		mdType : metadata type [ metrics | tagk | tagv ]
+		query  : query regular expression.
+*/
 func (m *MetadataCache) SearchByType(mdType string, query string) []string {
 
 	switch mdType {
