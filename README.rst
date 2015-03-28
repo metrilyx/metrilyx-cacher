@@ -14,7 +14,7 @@ Currently the following data is collected:
 Build
 -----
 
-    $ make all
+    make all
 
 
 This will produce a binary under **./build/metrilyx-cacher/opt/metrilyx/bin/metrilyx-cacher**
@@ -23,3 +23,9 @@ This will produce a binary under **./build/metrilyx-cacher/opt/metrilyx/bin/metr
 Installation
 ------------
 Copy the generated binary to the desired location.
+
+
+TODO
+----
+
+Cache dashboard listing.
