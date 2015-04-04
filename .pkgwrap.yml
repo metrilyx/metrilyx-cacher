@@ -22,3 +22,7 @@ Distributions:
 
 Package:
     build_env: go
+
+Notifications:
+    irc:
+    - chat.freenode.net#metrilyx
