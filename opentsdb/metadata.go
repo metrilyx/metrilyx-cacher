@@ -9,10 +9,12 @@ import (
 	"unicode"
 )
 
-const DEFAULT_SUGGEST_OPTS string = "max=16000000"
+const (
+	DEFAULT_SUGGEST_OPTS string = "max=16000000"
 
-const ALPHABETS string = "abcdefghijklmnopqrstuvwxyz"
-const DIGITS string = "0123456789"
+	ALPHABETS string = "abcdefghijklmnopqrstuvwxyz"
+	DIGITS    string = "0123456789"
+)
 
 var METADATA_TYPES = []string{"metrics", "tagk", "tagv"}
 
