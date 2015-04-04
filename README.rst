@@ -11,18 +11,11 @@ Currently the following data is collected:
     * Tag values
 
 
-Build
+Usage
 -----
-
-    make all
-
-
-This will produce a binary under **./build/metrilyx-cacher/opt/metrilyx/bin/metrilyx-cacher**
-
-
-Installation
-------------
-Copy the generated binary to the desired location.
+::
+    
+    metrilyx-cacher -url http://my.opentsdb.inst/api/suggest
 
 
 TODO
