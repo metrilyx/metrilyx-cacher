@@ -4,18 +4,21 @@ Distributions:
       
       build_cmd:
       - make all
+      - make install
 
     - name: ubuntu
       release: 14.04
       
       build_cmd:
       - make all
+      - make install
 
     - name: ubuntu
       release: 12.04
       
       build_cmd:
       - make all
+      - make install
 
 Package:
     build_env: go
