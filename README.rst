@@ -18,6 +18,8 @@ Usage
     metrilyx-cacher -url http://my.opentsdb.inst/api/suggest
 
 
+By default the startup script looks for the metrilyx.conf
+
 TODO
 ----
 
