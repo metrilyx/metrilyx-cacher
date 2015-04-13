@@ -93,7 +93,7 @@ func writeHttpOptionsResponse(writer http.ResponseWriter) int {
 func main() {
 
 	LISTEN_ADDR, TSDB_URL, SERVE_ENDPOINT, REFRESH_INTERVAL := initFlags()
-
+	log.Printf("Using datasource: %s\n", TSDB_URL)
 	mcache := opentsdb.NewMetadataCache()
 	go func() {
 		log.Println("Starting initial cache collection...")
