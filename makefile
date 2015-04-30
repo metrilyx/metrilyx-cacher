@@ -3,6 +3,7 @@ SHELL = /bin/bash
 
 BUILD_DIR = build/metrilyx-cacher
 BIN_DEST = /opt/metrilyx/bin
+
 clean:
 	rm -rf ./bin
 	rm -rf ./build

@@ -91,7 +91,12 @@ func FetchMetadata(url string) *MetadataCache {
 
 	wg.Wait()
 	close(commChan)
-	log.Println("Cache collection complete!")
+
+	log.Printf("* Cache collection complete:\n")
+	log.Printf("  * Metrics  : %d\n", len(mcache.Metric))
+	log.Printf("  * TagKeys  : %d\n", len(mcache.TagKey))
+	log.Printf("  * TagValues: %d\n", len(mcache.TagValue))
+
 	return mcache
 }
 
@@ -136,14 +141,20 @@ func (m *MetadataCache) AddByType(mdType string, data []string) {
 	Search a dataset given a regular expression.
 */
 func (m *MetadataCache) getMatches(dataset map[string]interface{}, query string) []string {
-	re, _ := regexp.Compile(query)
+	log.Printf(">> Regex query: %s\n", query)
+
+	re, err := regexp.Compile(query)
+	if err != nil {
+		log.Printf("ERROR: %s\n", err)
+	}
 	out := make([]string, 0)
 	for k, _ := range dataset {
-		match := re.MatchString(k)
-		if match {
+		if match := re.MatchString(k); match {
 			out = append(out, k)
 		}
 	}
+
+	log.Printf("<< Found: %d\n", len(out))
 	return out
 }
 

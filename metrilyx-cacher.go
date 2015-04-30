@@ -1,5 +1,8 @@
 package main
 
+/*
+ *	Cache opentsdb metadata so it can be regex searchable
+ */
 import (
 	"encoding/json"
 	"flag"
@@ -19,29 +22,42 @@ var MetaMap = map[string]string{
 	"tagvalues": "tagv",
 }
 
-type TSDBDataprovider struct {
+type TSDBDataproviderConfig struct {
 	URI            string `json:"uri"`
 	Port           int    `json:"port"`
 	SearchEndpoint string `json:"search_endpoint"`
 }
 
 type DataproviderConfig struct {
-	Dataprovider TSDBDataprovider `json:"dataprovider"`
+	Dataprovider TSDBDataproviderConfig `json:"dataprovider"`
+}
+
+func NewConfig(cfgfile string) (*DataproviderConfig, error) {
+	var dpconfig DataproviderConfig
+
+	fileBytes, err := ioutil.ReadFile(cfgfile)
+	if err != nil {
+		return &dpconfig, fmt.Errorf("Could not read config file: %v\n", err)
+	}
+
+	if err = json.Unmarshal(fileBytes, &dpconfig); err != nil {
+		return &dpconfig, fmt.Errorf("Failed to load json config: %s\n", err)
+	}
+
+	return &dpconfig, nil
 }
 
 func getTsdbUrl(cfgfile string) string {
-	file, e := ioutil.ReadFile(cfgfile)
-	if e != nil {
-		fmt.Printf("File error: %v\n", e)
+	cfg, err := NewConfig(cfgfile)
+	if err != nil {
+		fmt.Printf("%s", err)
 		os.Exit(1)
 	}
-	var dpconfig DataproviderConfig
-	json.Unmarshal(file, &dpconfig)
 
 	return fmt.Sprintf("%s:%d%s",
-		dpconfig.Dataprovider.URI,
-		dpconfig.Dataprovider.Port,
-		dpconfig.Dataprovider.SearchEndpoint)
+		cfg.Dataprovider.URI,
+		cfg.Dataprovider.Port,
+		cfg.Dataprovider.SearchEndpoint)
 }
 
 func printHelp() {
@@ -73,6 +89,9 @@ func initFlags() (string, string, string, int) {
 			os.Exit(1)
 		}
 	}
+
+	log.Printf("Using datasource: %s\n", tsdbUrl)
+
 	return listenAddr, tsdbUrl, endpoint, refreshInterval
 }
 
@@ -93,8 +112,9 @@ func writeHttpOptionsResponse(writer http.ResponseWriter) int {
 func main() {
 
 	LISTEN_ADDR, TSDB_URL, SERVE_ENDPOINT, REFRESH_INTERVAL := initFlags()
-	log.Printf("Using datasource: %s\n", TSDB_URL)
+
 	mcache := opentsdb.NewMetadataCache()
+
 	go func() {
 		log.Println("Starting initial cache collection...")
 		mcache = opentsdb.FetchMetadata(TSDB_URL)
@@ -102,6 +122,7 @@ func main() {
 
 	log.Printf("Setting caching schedule: %d secs...\n", REFRESH_INTERVAL)
 	ticker := time.NewTicker(time.Duration(REFRESH_INTERVAL) * time.Second)
+
 	quit := make(chan struct{})
 	go func() {
 		for {
@@ -125,14 +146,14 @@ func main() {
 		if r.Method == "OPTIONS" {
 			respCode = writeHttpOptionsResponse(w)
 		} else {
-			_, ok := MetaMap[metadataType]
-			if !ok {
-				respCode = writeHttpResponse(w, []byte(`{"error": "page not found"}`), 404)
+			if _, ok := MetaMap[metadataType]; !ok {
+				respCode = writeHttpResponse(w, []byte(`{"error": "Not found"}`), 404)
 			} else {
 				params := r.URL.Query()
 				if val, ok := params["q"]; ok {
-
+					/* Perform search */
 					results := mcache.SearchByType(MetaMap[metadataType], val[0])
+
 					bytes, err := json.Marshal(results)
 					if err != nil {
 						http.Error(w, err.Error(), http.StatusInternalServerError)
